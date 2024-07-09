@@ -1,10 +1,19 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import AuthPage from "./pages/auth/authPage";
+
 const App = () => {
   return (
-    <div>
-      <button className="inline-block cursor-pointer rounded-md bg-gray-800 px-4 py-3 text-center text-sm font-semibold uppercase text-white transition duration-200 ease-in-out hover:bg-gray-900">
-        Button
-      </button>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<h1>Home</h1>} />
+
+        {/* Auth Page */}
+        <Route path="/auth">
+          <Route path="sign-in" element={<AuthPage />} />
+          <Route path="sign-up" element={<AuthPage />} />
+        </Route>
+      </Routes>
+    </Router>
   );
 };
 export default App;
