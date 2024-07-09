@@ -33,7 +33,25 @@ export const signUp = async (req, res, next) => {
 
 export const signIn = async (req, res, next) => {
   try {
-    res.send("Sign in route");
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) return next(handleError(400, "Invalid email or password"));
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid)
+      return next(handleError(400, "Invalid email or password"));
+
+    const { password: userPassword, ...userInfo } = user._doc;
+    const access_token = generateToken(user._id, res);
+
+    res
+      .status(200)
+      .json({
+        message: `Welcome back ${userInfo.name}`,
+        user: userInfo,
+        access_token,
+      });
   } catch (error) {
     next(error);
   }

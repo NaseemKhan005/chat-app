@@ -13,6 +13,8 @@ const generateToken = (userId, res) => {
     secure: config.env !== "development",
     sameSite: config.env !== "development" && "None",
   });
+
+  return token;
 };
 
 export default generateToken;
