@@ -45,13 +45,11 @@ export const signIn = async (req, res, next) => {
     const { password: userPassword, ...userInfo } = user._doc;
     const access_token = generateToken(user._id, res);
 
-    res
-      .status(200)
-      .json({
-        message: `Welcome back ${userInfo.name}`,
-        user: userInfo,
-        access_token,
-      });
+    res.status(200).json({
+      message: `Welcome back ${userInfo.name}`,
+      user: userInfo,
+      access_token,
+    });
   } catch (error) {
     next(error);
   }
@@ -59,7 +57,10 @@ export const signIn = async (req, res, next) => {
 
 export const logout = async (req, res, next) => {
   try {
-    res.send("Logout route");
+    res
+      .clearCookie("access_token")
+      .status(200)
+      .json({ message: "Logged out successful" });
   } catch (error) {
     next(error);
   }
