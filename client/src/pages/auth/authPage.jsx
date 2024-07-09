@@ -24,7 +24,7 @@ const AuthPage = () => {
               <input
                 type="text"
                 className="grow"
-                placeholder="Enter your full name"
+                placeholder="Enter your name"
               />
             </label>
           )}
