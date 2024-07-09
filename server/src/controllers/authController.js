@@ -11,7 +11,7 @@ export const signUp = async (req, res, next) => {
     const user = await User.findOne({ email });
     if (user) return next(handleError(400, "User already registered"));
 
-    const hashedPassword = await bcrypt.hash(password, 12);
+    const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({
       name,
       username: name.toLowerCase().split(" ").join("") + uuidv4().slice(0, 5),
@@ -21,7 +21,7 @@ export const signUp = async (req, res, next) => {
 
     const { password: userPassword, ...userInfo } = newUser._doc;
 
-    res.status(201).json({ message: "User created", user: userInfo });
+    res.status(201).json({ message: `Welcome ${name}`, user: userInfo });
   } catch (error) {
     next(error);
   }

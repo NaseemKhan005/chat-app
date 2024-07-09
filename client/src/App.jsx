@@ -1,9 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+
 import AuthPage from "./pages/auth/authPage";
 
 const App = () => {
   return (
     <Router>
+      <Toaster />
       <Routes>
         <Route path="/" element={<h1>Home</h1>} />
 

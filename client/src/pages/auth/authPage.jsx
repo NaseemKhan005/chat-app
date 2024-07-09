@@ -1,14 +1,52 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { BsEnvelope } from "react-icons/bs";
+import toast from "react-hot-toast";
 import { AiOutlineUser } from "react-icons/ai";
+import { BsEnvelope } from "react-icons/bs";
 import { MdPassword } from "react-icons/md";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
+import { Link, useLocation } from "react-router-dom";
+import { BiLoader } from "react-icons/bi";
 
 const AuthPage = () => {
-  const [showPassword, setShowPassword] = useState(false);
   const { pathname } = useLocation();
   const path = pathname.split("/").pop();
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setIsLoading(true);
+      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/auth/${path}`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+
+      if (!res.ok) return toast.error(data.error);
+      toast.success(data.message);
+      return data;
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="w-full h-screen flex-center">
@@ -17,14 +55,17 @@ const AuthPage = () => {
           {path === "sign-in" ? "Welcome Back!" : "Join Us Today!"}
         </h1>
 
-        <form className="flex flex-col gap-5">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
           {path === "sign-up" && (
             <label className="input h-14 input-bordered flex-center gap-2">
               <AiOutlineUser className="size-5 mb-[.1rem]" />
               <input
                 type="text"
-                className="grow"
                 placeholder="Enter your name"
+                name="name"
+                onChange={handleChange}
+                disabled={isLoading}
+                className="grow disabled:text-black/60"
               />
             </label>
           )}
@@ -33,8 +74,11 @@ const AuthPage = () => {
             <BsEnvelope className="size-5 mb-[.1rem]" />
             <input
               type="text"
-              className="grow"
               placeholder="Enter your email"
+              name="email"
+              onChange={handleChange}
+              disabled={isLoading}
+              className="grow disabled:text-black/60"
             />
           </label>
 
@@ -42,8 +86,11 @@ const AuthPage = () => {
             <MdPassword className="size-5 mb-[.1rem]" />
             <input
               type={showPassword ? "text" : "password"}
-              className="grow"
               placeholder="Enter your password"
+              name="password"
+              onChange={handleChange}
+              disabled={isLoading}
+              className="grow disabled:text-black/60"
             />
 
             <button
@@ -54,8 +101,20 @@ const AuthPage = () => {
             </button>
           </label>
 
-          <button className="bg-primary text-white py-4 rounded-lg">
-            {path === "sign-in" ? "Sign In" : "Sign Up"}
+          <button
+            disabled={isLoading}
+            className="bg-primary flex-center text-white py-4 rounded-lg disabled:cursor-not-allowed disabled:!opacity-80"
+          >
+            {isLoading ? (
+              <span>
+                <BiLoader className="animate-spin inline-block mr-1 mb-1 size-5" />
+                Loading...
+              </span>
+            ) : path === "sign-in" ? (
+              "Sign In"
+            ) : (
+              "Sign Up"
+            )}
           </button>
 
           <p className="text-center">
