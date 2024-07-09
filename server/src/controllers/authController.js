@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import User from "../model/userModel.js";
 import handleError from "../utils/handleError.js";
+import generateToken from "../utils/generateToken.js";
 
 export const signUp = async (req, res, next) => {
   try {
@@ -20,8 +21,11 @@ export const signUp = async (req, res, next) => {
     });
 
     const { password: userPassword, ...userInfo } = newUser._doc;
+    const access_token = generateToken(newUser._id, res);
 
-    res.status(201).json({ message: `Welcome ${name}`, user: userInfo });
+    res
+      .status(201)
+      .json({ message: `Welcome ${name}`, user: userInfo, access_token });
   } catch (error) {
     next(error);
   }

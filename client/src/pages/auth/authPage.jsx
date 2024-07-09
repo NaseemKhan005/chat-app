@@ -95,7 +95,9 @@ const AuthPage = () => {
 
             <button
               className="absolute right-2 text-2xl hover:bg-black/5 rounded-full p-2 top-2/4 transform -translate-y-2/4 cursor-pointer"
-              onClick={() => setShowPassword(!showPassword)}
+              onClick={(e) => (
+                e.preventDefault(), setShowPassword(!showPassword)
+              )}
             >
               {showPassword ? <VscEyeClosed /> : <VscEye />}
             </button>
