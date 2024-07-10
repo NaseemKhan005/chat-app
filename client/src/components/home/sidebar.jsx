@@ -8,7 +8,9 @@ const Sidebar = () => {
       <SidebarLinks />
 
       <div className="w-full">
-        <label className="input input-bordered h-[3.4rem] flex items-center gap-2 relative m-5 !outline-none">
+        <h1 className="px-5 pt-3 text-lg font-semibold">Chats</h1>
+
+        <label className="input input-bordered h-[3.4rem] flex items-center gap-2 relative mx-5 my-3 !outline-none">
           <RiSearch2Line className="size-6" />
           <input
             type="text"
@@ -16,21 +18,27 @@ const Sidebar = () => {
             placeholder="Search"
           />
         </label>
+        {/* <div className="w-full h-0.5 bg-black/5 my-1" /> */}
 
-        <div className="flex flex-col pb-5 select-none">
-          <div className="w-full h-0.5 bg-black/5 my-1" />
-          {[...Array(5)].map((_, i) => (
+        <div className="flex flex-col gap-1 select-none overflow-auto h-[calc(100vh - 195px)] h-full">
+          {[...Array(15)].map((_, i) => (
             <div key={i}>
-              <div className="flex items-center mx-2 gap-3 py-2.5 px-3.5 cursor-pointer hover:bg-neutral-50 rounded-lg">
+              <div className="flex items-center mx-2 gap-3 py-2.5 px-3.5 cursor-pointer hover:bg-neutral-100 rounded-lg">
                 <div className="avatar online">
                   <div className="w-12 rounded-full">
                     <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
                   </div>
                 </div>
 
-                <p>Naseem Khan</p>
+                <div className="w-full">
+                  <div className="flex-between w-full">
+                    <p className="font-semibold text-sm">Naseem Khan</p>
+                    <p className="text-xs mt-0.5 text-zinc-500">11:02 AM</p>
+                  </div>
+                  <p className="text-xs font-medium mt-0.5">Ok</p>
+                </div>
               </div>
-              <div className="w-full h-0.5 bg-black/5 my-1" />
+              {/* <div className="w-full h-0.5 bg-black/5 my-1" /> */}
             </div>
           ))}
         </div>
