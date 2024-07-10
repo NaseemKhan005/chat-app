@@ -3,7 +3,7 @@ import Sidebar from "../../components/home/sidebar";
 
 const HomePage = () => {
   return (
-    <div>
+    <div className="flex items-start gap-5 h-dvh bg-neutral-50/30">
       <Sidebar />
       <Conversation />
     </div>
