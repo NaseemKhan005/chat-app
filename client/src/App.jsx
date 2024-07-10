@@ -1,10 +1,10 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
+import RootLayout from "./layouts/rootLayout";
 import AuthPage from "./pages/auth/authPage";
 import HomePage from "./pages/home/homePage";
-import StatusPage from "./pages/auth/status/statusPage";
-import RootLayout from "./layouts/rootLayout";
+import StatusPage from "./pages/status/statusPage";
 
 const App = () => {
   return (

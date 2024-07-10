@@ -4,10 +4,10 @@ import SidebarLinks from "../components/home/sidebarLinks";
 
 const RootLayout = () => {
   return (
-    <div className="flex items-start h-dvh bg-neutral-50/30">
+    <div className="flex items-start w-full h-dvh bg-neutral-50/30">
       <SidebarLinks />
 
-      <div className="ml-20">
+      <div className="ml-20 w-full">
         <Outlet />
       </div>
     </div>
