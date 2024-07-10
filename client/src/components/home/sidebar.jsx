@@ -1,12 +1,8 @@
 import { RiSearch2Line } from "react-icons/ri";
 
-import SidebarLinks from "./sidebarLinks";
-
 const Sidebar = () => {
   return (
-    <div className="bg-white flex h-full min-w-[28rem] shadow-md shadow-black/5">
-      <SidebarLinks />
-
+    <div className="bg-white flex h-full min-w-96 shadow-md shadow-black/5">
       <div className="w-full">
         <h1 className="px-5 pt-3 text-lg font-semibold">Chats</h1>
 

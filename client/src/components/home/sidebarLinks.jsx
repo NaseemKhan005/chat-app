@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { BsChatDots } from "react-icons/bs";
 import { FiLogOut, FiMenu } from "react-icons/fi";
@@ -13,9 +14,9 @@ const SidebarLinks = () => {
 
   return (
     <div
-      className={`bg-gray-100 h-full py-5 transition-all duration-500 overflow-hidden ${
+      className={`bg-gray-100 z-20 fixed top-0 left-0 h-dvh py-5 transition-all overflow-hidden ${
         showSidebar
-          ? "w-60 absolute top-0 left-0 h-dvh bg-gray-100 z-20 flex flex-col items-start justify-between"
+          ? "w-72 bg-gray-100 flex flex-col items-start justify-between"
           : "w-20 flex-between flex-col"
       }`}
     >
@@ -50,7 +51,7 @@ const SidebarLinks = () => {
         <Link to="/status" className="!w-full block">
           <button
             className={`btn w-full ${activeClass} ${
-              pathname === "/chat" && "before:bg-primary"
+              pathname === "/status" && "before:bg-primary bg-primary/10 text-primary"
             }
             ${
               showSidebar
