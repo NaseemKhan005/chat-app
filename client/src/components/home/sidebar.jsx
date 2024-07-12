@@ -2,8 +2,8 @@ import { RiSearch2Line } from "react-icons/ri";
 
 const Sidebar = () => {
   return (
-    <div className="bg-white flex overflow-auto min-w-96 shadow-md shadow-black/5">
-      <div className="w-full flex-grow">
+    <div className="bg-white flex h-full min-w-[calc(100vw-4rem)] md:min-w-80 lg:min-w-96 shadow-md shadow-black/5 md:relative fixed top-0 left-16 md:left-0 z-10">
+      <div className="w-full flex flex-col overflow-auto pb-1">
         <h1 className="px-5 pt-3 text-lg font-semibold">Chats</h1>
 
         <label className="input input-bordered h-[3.4rem] flex items-center gap-2 relative mx-5 my-3 !outline-none">
@@ -16,7 +16,7 @@ const Sidebar = () => {
         </label>
         {/* <div className="w-full h-0.5 bg-black/5 my-1" /> */}
 
-        <div className="flex flex-col gap-1 select-none overflow-auto h-[calc(100vh - 195px)] h-full">
+        <div className="flex flex-col flex-grow gap-1 select-none overflow-auto h-full">
           {[...Array(15)].map((_, i) => (
             <div key={i}>
               <div className="flex items-center mx-2 gap-3 py-2.5 px-3.5 cursor-pointer hover:bg-neutral-100 rounded-lg">

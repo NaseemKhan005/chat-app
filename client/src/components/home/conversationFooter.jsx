@@ -14,9 +14,9 @@ const ConversationFooter = () => {
   };
 
   return (
-    <div className="w-full bg-white flex items-center gap-4 border-b border-l px-5 py-3 relative">
+    <div className="w-full bg-white flex items-center gap-2 lg:gap-4 border-b border-l px-5 py-2 lg:py-3 relative">
       <button onClick={() => setShowPicker((val) => !val)}>
-        <BsEmojiSmile className="size-6" />
+        <BsEmojiSmile className="size-5 lg:size-6" />
       </button>
       {showPicker && (
         <div className="absolute bottom-full mb-2">
@@ -24,7 +24,7 @@ const ConversationFooter = () => {
         </div>
       )}
       <button>
-        <GrAttachment className="size-5" />
+        <GrAttachment className="size-4 lg:size-5" />
       </button>
 
       <div className="w-full">
@@ -32,12 +32,12 @@ const ConversationFooter = () => {
           type="text"
           placeholder="Type here"
           value={chosenEmoji ? chosenEmoji.emoji : ""}
-          className="border p-3.5 rounded-lg w-full focus:outline-none focus-within:outline-none outline-none"
+          className="border p-3.5 rounded-lg w-full focus:outline-none focus-within:outline-none outline-none text-sm lg:text-base"
         />
       </div>
 
       <button className="p-3.5 px-4 rounded-lg bg-primary text-white hover:bg-indigo-500">
-        <PiPaperPlaneRightLight className="size-6" />
+        <PiPaperPlaneRightLight className="size-5 lg:size-6" />
       </button>
     </div>
   );

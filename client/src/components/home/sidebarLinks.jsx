@@ -17,11 +17,11 @@ const SidebarLinks = () => {
       className={`bg-gray-100 z-20 fixed top-0 left-0 h-dvh py-5 transition-all overflow-hidden ${
         showSidebar
           ? "w-72 bg-gray-100 flex flex-col items-start justify-between"
-          : "w-20 flex-between flex-col"
+          : "w-16 lg:w-20 flex-between flex-col"
       }`}
     >
       <div
-        className={`flex flex-col gap-2 w-full px-2 ${
+        className={`flex flex-col gap-2 w-full px-1 lg:px-2 ${
           showSidebar ? "items-start" : "items-center"
         }`}
       >
@@ -71,7 +71,7 @@ const SidebarLinks = () => {
           showSidebar ? "items-start" : "items-center"
         }`}
       >
-        <div className="px-2 w-full">
+        <div className="px-1 lg:px-2 w-full">
           <button
             className={`btn w-full hover:bg-primary/10 hover:text-primary ${
               showSidebar
