@@ -2,8 +2,8 @@ import { RiSearch2Line } from "react-icons/ri";
 
 const Sidebar = () => {
   return (
-    <div className="bg-white flex h-full min-w-96 shadow-md shadow-black/5">
-      <div className="w-full">
+    <div className="bg-white flex overflow-auto min-w-96 shadow-md shadow-black/5">
+      <div className="w-full flex-grow">
         <h1 className="px-5 pt-3 text-lg font-semibold">Chats</h1>
 
         <label className="input input-bordered h-[3.4rem] flex items-center gap-2 relative mx-5 my-3 !outline-none">
