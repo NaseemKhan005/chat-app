@@ -1,4 +1,5 @@
 import ConversationHeader from "./conversationHeader";
+import ConversationFooter from "./conversationFooter";
 
 const Conversation = () => {
   return (
@@ -20,6 +21,8 @@ const Conversation = () => {
           </div>
         ))}
       </div>
+
+      <ConversationFooter />
     </div>
   );
 };
