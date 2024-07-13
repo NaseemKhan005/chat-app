@@ -14,7 +14,13 @@ const Sidebar = () => {
             placeholder="Search"
           />
         </label>
-        {/* <div className="w-full h-0.5 bg-black/5 my-1" /> */}
+
+        <div className="px-5 flex items-center gap-3 mb-3">
+          <button className="px-3 py-1.5 bg-primary/10 rounded-full text-primary text-sm 2xl:text-base">All</button>
+          <button className="px-3 py-1.5 bg-primary/10 rounded-full text-primary text-sm 2xl:text-base">Unread</button>
+        </div>
+
+        <div className="w-full h-0.5 bg-black/5 mb-3" />
 
         <div className="flex flex-col flex-grow gap-1 select-none overflow-auto h-full">
           {[...Array(15)].map((_, i) => (
