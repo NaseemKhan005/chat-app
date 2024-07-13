@@ -8,7 +8,7 @@ const Conversation = () => {
 
       <div className="overflow-auto py-5 px-2 lg:p-5 flex-grow">
         {[...Array(10)].map((_, i) => (
-          <div key={i} className="text-sm lg:text-base">
+          <div key={i} className="text-sm 2xl:text-base">
             <div className="chat chat-start">
               <div className="chat-bubble bg-white text-black">
                 It&apos;s over Anakin,
