@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 
-import User from "../model/userModel.js";
+import User from "../models/userModel.js";
 import handleError from "../utils/handleError.js";
 import generateToken from "../utils/generateToken.js";
 
