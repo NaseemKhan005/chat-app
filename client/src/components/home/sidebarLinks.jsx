@@ -60,7 +60,7 @@ const SidebarLinks = () => {
             }
             `}
           >
-            <PiCirclesThree className="size-[1.3rem]" />
+            <PiCirclesThree className="size-[1.4rem] stroke-2" />
             {showSidebar && <p>Status</p>}
           </button>
         </Link>

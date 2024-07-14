@@ -36,7 +36,7 @@ const ConversationFooter = () => {
         />
       </div>
 
-      <button className="p-3.5 px-4 rounded-lg bg-primary text-white hover:bg-indigo-500">
+      <button className="p-3.5 px-4 rounded-lg bg-primary text-white">
         <PiPaperPlaneRightLight className="size-5 lg:size-6" />
       </button>
     </div>
