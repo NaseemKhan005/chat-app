@@ -36,3 +36,23 @@ export const sendMessage = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getMessages = async (req, res, next) => {
+  try {
+    const { id: userToChat } = req.params;
+    const senderId = req.user._id;
+
+    const conversation = await Conversation.findOne({
+      participants: { $all: [senderId, userToChat] },
+    }).populate("messages");
+
+    res
+      .status(200)
+      .json({
+        message: "All messages fetched successfully",
+        messages: conversation.messages,
+      });
+  } catch (error) {
+    next(error);
+  }
+};

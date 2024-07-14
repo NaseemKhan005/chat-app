@@ -6,7 +6,6 @@ import { config } from "./config/config.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import authRoutes from "./routes/authRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
-import conversationRoutes from "./routes/conversationRoutes.js";
 
 const app = express();
 // Middlewares
@@ -29,8 +28,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/messages", messageRoutes);
-app.use("/api/v1/conversations", conversationRoutes);
-
+l;
 // Error Handler
 app.use(errorHandler);
 
