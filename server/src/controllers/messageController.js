@@ -46,12 +46,12 @@ export const getMessages = async (req, res, next) => {
       participants: { $all: [senderId, userToChat] },
     }).populate("messages");
 
-    res
-      .status(200)
-      .json({
-        message: "All messages fetched successfully",
-        messages: conversation.messages,
-      });
+    if (!conversation) return res.status(200).json({ messages: [] });
+
+    res.status(200).json({
+      message: "All messages fetched successfully",
+      messages: conversation.messages,
+    });
   } catch (error) {
     next(error);
   }
