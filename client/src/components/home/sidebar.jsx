@@ -86,7 +86,13 @@ const Sidebar = () => {
                     </p>
                     <p className="text-xs mt-0.5 text-zinc-500">11:02 AM</p>
                   </div>
-                  <p className="text-xs font-medium mt-0.5">Ok</p>
+
+                  <div className="flex-between w-full">
+                    <p className="text-xs font-medium mt-0.5">Ok</p>
+                    <p className="text-xs mt-0.5 text-white bg-primary rounded-full w-5 h-5 flex-center">
+                      1
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
