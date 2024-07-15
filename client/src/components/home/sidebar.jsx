@@ -2,9 +2,15 @@ import { RiSearch2Line } from "react-icons/ri";
 import { useGetAllUsersQuery } from "../../store/api/chat/userApiSlice";
 import SidebarSkeleton from "../skeletons/sidebarSkeleton";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserToChat } from "../../store/slices/chat/userSlice";
 
 const Sidebar = () => {
   const [searchValue, setSearchValue] = useState("");
+  const dispatch = useDispatch();
+  const selectedUserToChat = useSelector(
+    (state) => state.user.selectedUserToChat
+  );
 
   const { data, isLoading: usersLoading } = useGetAllUsersQuery();
 
@@ -71,8 +77,12 @@ const Sidebar = () => {
           )}
 
           {filteredUsers?.map((user, i) => (
-            <div key={i}>
-              <div className="flex items-center mx-2 gap-3 py-2.5 px-3.5 cursor-pointer hover:bg-neutral-100 rounded-lg">
+            <div key={i} onClick={() => dispatch(setUserToChat(user))}>
+              <div
+                className={`flex items-center mx-2 gap-3 py-2.5 px-3.5 cursor-pointer hover:bg-neutral-100 rounded-lg ${
+                  user?._id === selectedUserToChat?._id && "bg-neutral-100"
+                }`}
+              >
                 <div className="avatar online">
                   <div className="w-12 rounded-full">
                     <img src={user?.profilePic || "/images/no-avatar.jpg"} />

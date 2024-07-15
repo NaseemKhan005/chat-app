@@ -1,4 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import storage from "redux-persist/lib/storage";
+import persistStore from "redux-persist/es/persistStore";
 import {
   FLUSH,
   PAUSE,
@@ -8,11 +10,10 @@ import {
   REGISTER,
   REHYDRATE,
 } from "redux-persist";
-import storage from "redux-persist/lib/storage";
 
-import persistStore from "redux-persist/es/persistStore";
 import apiSlice from "./api/apiSlice";
 import authSlice from "./slices/auth/authSlice";
+import userSlice from "./slices/chat/userSlice";
 
 const persistConfig = {
   key: "root",
@@ -23,6 +24,7 @@ const authReducer = persistReducer(persistConfig, authSlice);
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  user: userSlice,
   [apiSlice.reducerPath]: apiSlice.reducer,
 });
 
