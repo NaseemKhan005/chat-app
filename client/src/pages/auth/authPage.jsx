@@ -1,18 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { AiOutlineUser } from "react-icons/ai";
 import { BsEnvelope } from "react-icons/bs";
 import { MdPassword } from "react-icons/md";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BiLoader } from "react-icons/bi";
+import { useAuthMutation } from "../../store/api/auth/authApiSlice";
 
 const AuthPage = () => {
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const path = pathname.split("/").pop();
 
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -24,29 +25,25 @@ const AuthPage = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const [authMutation, { isLoading, isError, error, data, isSuccess }] =
+    useAuthMutation();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      setIsLoading(true);
-      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/auth/${path}`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json();
 
-      if (!res.ok) return toast.error(data.error);
-      toast.success(data.message);
-      return data;
+    try {
+      await authMutation({ path, formData }).unwrap();
     } catch (error) {
-      toast.error(error.message);
-    } finally {
-      setIsLoading(false);
+      throw error?.data?.message;
     }
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success(data?.message);
+      navigate("/");
+    }
+  }, [data?.message, isSuccess, navigate]);
 
   return (
     <div className="w-full h-screen flex-center">
@@ -103,6 +100,12 @@ const AuthPage = () => {
             </button>
           </label>
 
+          {isError && (
+            <p className="text-red-500 text-xs md:text-sm">
+              {error?.data?.error}
+            </p>
+          )}
+
           <button
             disabled={isLoading}
             className="bg-primary flex-center text-white py-4 rounded-lg disabled:cursor-not-allowed disabled:!opacity-80"
@@ -135,4 +138,5 @@ const AuthPage = () => {
     </div>
   );
 };
+
 export default AuthPage;
