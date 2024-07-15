@@ -57,7 +57,7 @@ const SidebarLinks = () => {
 
         <Link to="/" className="!w-full block">
           <button
-            className={`btn w-full ${activeClass} ${
+            className={`btn w-full border-0 rounded-l-none shadow-none h-[3.4rem] ${activeClass} ${
               pathname === "/" && "before:bg-primary bg-primary/10 text-primary"
             }
             ${
@@ -74,7 +74,7 @@ const SidebarLinks = () => {
 
         <Link to="/status" className="!w-full block">
           <button
-            className={`btn w-full ${activeClass} ${
+            className={`btn w-full border-0 rounded-l-none shadow-none h-[3.4rem] ${activeClass} ${
               pathname === "/status" &&
               "before:bg-primary bg-primary/10 text-primary"
             }
@@ -98,7 +98,7 @@ const SidebarLinks = () => {
       >
         <div onClick={handleLogout} className="px-1 lg:px-2 w-full">
           <button
-            className={`btn w-full hover:bg-primary/10 hover:text-primary ${
+            className={`btn w-full h-[3.4rem] hover:bg-primary/10 hover:text-primary ${
               showSidebar
                 ? "flex items-center justify-normal gap-3"
                 : "flex-center"

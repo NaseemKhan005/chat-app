@@ -1,5 +1,5 @@
 import { RiSearch2Line } from "react-icons/ri";
-import { useGetAllUsersQuery } from "../../store/api/user/userApiSlice";
+import { useGetAllUsersQuery } from "../../store/api/chat/userApiSlice";
 import SidebarSkeleton from "../skeletons/sidebarSkeleton";
 import { useState } from "react";
 
