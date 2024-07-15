@@ -21,8 +21,8 @@ const AuthPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
-    password: "",
+    email: "" || "demo@gmail.com",
+    password: "" || "123456",
   });
 
   const handleChange = (e) => {
@@ -68,6 +68,7 @@ const AuthPage = () => {
                 type="text"
                 placeholder="Enter your name"
                 name="name"
+                value={formData.name}
                 onChange={handleChange}
                 disabled={isLoading}
                 className="grow disabled:text-black/60"
@@ -81,6 +82,7 @@ const AuthPage = () => {
               type="text"
               placeholder="Enter your email"
               name="email"
+              value={formData.email}
               onChange={handleChange}
               disabled={isLoading}
               className="grow disabled:text-black/60"
@@ -93,6 +95,7 @@ const AuthPage = () => {
               type={showPassword ? "text" : "password"}
               placeholder="Enter your password"
               name="password"
+              value={formData.password}
               onChange={handleChange}
               disabled={isLoading}
               className="grow disabled:text-black/60"
