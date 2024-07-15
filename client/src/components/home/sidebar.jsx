@@ -1,10 +1,16 @@
 import { RiSearch2Line } from "react-icons/ri";
-
 import { useGetAllUsersQuery } from "../../store/api/user/userApiSlice";
 import SidebarSkeleton from "../skeletons/sidebarSkeleton";
+import { useState } from "react";
 
 const Sidebar = () => {
+  const [searchValue, setSearchValue] = useState("");
+
   const { data, isLoading: usersLoading } = useGetAllUsersQuery();
+
+  const filteredUsers = data?.users?.filter((user) =>
+    user.name.toLowerCase().includes(searchValue.toLowerCase())
+  );
 
   return (
     <div className="bg-white flex h-full min-w-[calc(100vw-4rem)] md:min-w-80 lg:min-w-96 shadow-md shadow-black/5 md:relative fixed top-0 left-16 md:left-0 z-10">
@@ -17,6 +23,8 @@ const Sidebar = () => {
             type="text"
             className="grow outline-none"
             placeholder="Search"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
           />
         </label>
 
@@ -36,11 +44,11 @@ const Sidebar = () => {
           </div>
         )}
 
-        <div className="flex flex-col flex-grow gap-1 select-none overflow-auto h-full">
-          <div className="w-full h-0.5 bg-black/5 mb-3" />
+        <div className="flex flex-col flex-grow gap-1 select-none overflow-auto h-full mt-2">
+          {/* <div className="w-full h-0.5 bg-black/5 mb-3" /> */}
 
           {usersLoading && (
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 mt-2">
               <SidebarSkeleton />
               <SidebarSkeleton />
               <SidebarSkeleton />
@@ -56,13 +64,13 @@ const Sidebar = () => {
             </div>
           )}
 
-          {data?.users?.length === 0 && (
+          {filteredUsers?.length === 0 && (
             <div className="flex items-center justify-center h-full">
               <p className="text-lg text-neutral-500">No chats found</p>
             </div>
           )}
 
-          {data?.users?.map((user, i) => (
+          {filteredUsers?.map((user, i) => (
             <div key={i}>
               <div className="flex items-center mx-2 gap-3 py-2.5 px-3.5 cursor-pointer hover:bg-neutral-100 rounded-lg">
                 <div className="avatar online">
@@ -88,4 +96,5 @@ const Sidebar = () => {
     </div>
   );
 };
+
 export default Sidebar;
