@@ -9,7 +9,10 @@ const SidebarSkeleton = () => {
             <div className="skeleton h-3 w-14"></div>
           </div>
 
-          <div className="skeleton h-2 w-28"></div>
+          <div className="flex-between">
+            <div className="skeleton h-2 w-28"></div>
+            <div className="skeleton h-3 w-5"></div>
+          </div>
         </div>
       </div>
     </div>

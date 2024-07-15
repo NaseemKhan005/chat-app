@@ -19,11 +19,11 @@ const SidebarLinks = () => {
   const activeClass =
     "relative before:absolute before:top-0 before:left-0 before:w-[2.5px] before:h-full before:rounded-full hover:before:bg-primary hover:bg-primary/10 hover:text-primary";
 
-  const [logout] = useLogoutMutation();
+  const [logout, { isLoading }] = useLogoutMutation();
 
   const handleLogout = async (e) => {
     e.preventDefault();
-    const loading = toast.loading("Logging out...");
+    const loading = toast.loading("please wait...");
     try {
       await logout().unwrap();
       toast.success("Logged out successfully.");
@@ -104,8 +104,12 @@ const SidebarLinks = () => {
                 : "flex-center"
             }`}
           >
-            <FiLogOut className="size-5 rotate-180" />
-            {showSidebar && <p>Logout</p>}
+            {isLoading ? (
+              <span className="loading loading-spinner loading-md"></span>
+            ) : (
+              <FiLogOut className="size-5 rotate-180" />
+            )}
+            {showSidebar && <p>{isLoading ? "Logging out..." : "Logout"}</p>}
           </button>
         </div>
 
