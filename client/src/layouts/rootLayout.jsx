@@ -1,9 +1,12 @@
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import SidebarLinks from "../components/home/sidebarLinks";
 
 const RootLayout = () => {
-  return (
+  const user = useSelector((state) => state.auth.user);
+
+  return user ? (
     <div className="flex items-start w-full h-dvh bg-neutral-100">
       <SidebarLinks />
 
@@ -11,6 +14,8 @@ const RootLayout = () => {
         <Outlet />
       </div>
     </div>
+  ) : (
+    <Navigate to="/auth/sign-in" />
   );
 };
 export default RootLayout;

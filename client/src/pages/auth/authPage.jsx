@@ -4,10 +4,10 @@ import { AiOutlineUser } from "react-icons/ai";
 import { BsEnvelope } from "react-icons/bs";
 import { MdPassword } from "react-icons/md";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { BiLoader } from "react-icons/bi";
 import { useAuthMutation } from "../../store/api/auth/authApiSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../store/slices/auth/authSlice";
 
 const AuthPage = () => {
@@ -15,6 +15,8 @@ const AuthPage = () => {
   const { pathname } = useLocation();
   const path = pathname.split("/").pop();
   const dispath = useDispatch();
+
+  const user = useSelector((state) => state.auth.user);
 
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -49,7 +51,9 @@ const AuthPage = () => {
     }
   }, [data?.message, data?.user, dispath, isSuccess, navigate]);
 
-  return (
+  return user ? (
+    <Navigate to="/" />
+  ) : (
     <div className="w-full h-screen flex-center">
       <div className="max-w-md w-full px-3">
         <h1 className="text-center mb-8 text-2xl md:text-3xl font-medium">

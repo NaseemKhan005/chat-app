@@ -6,11 +6,16 @@ import Picker from "emoji-picker-react";
 
 const ConversationFooter = () => {
   const [chosenEmoji, setChosenEmoji] = useState(null);
+  const [inputValue, setInputValue] = useState("");
   const [showPicker, setShowPicker] = useState(false);
 
   const onEmojiClick = (event, emojiObject) => {
     setChosenEmoji(emojiObject);
     setShowPicker(false);
+  };
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
   };
 
   return (
@@ -31,7 +36,8 @@ const ConversationFooter = () => {
         <input
           type="text"
           placeholder="Type here"
-          value={chosenEmoji ? chosenEmoji.emoji : ""}
+          value={inputValue}
+          onChange={handleInputChange}
           className="border p-3.5 rounded-lg w-full focus:outline-none focus-within:outline-none outline-none text-sm lg:text-base"
         />
       </div>
