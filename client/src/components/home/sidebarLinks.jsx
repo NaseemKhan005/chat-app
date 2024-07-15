@@ -4,14 +4,17 @@ import { FiLogOut, FiMenu } from "react-icons/fi";
 import { IoCloseSharp } from "react-icons/io5";
 import { PiCirclesThree } from "react-icons/pi";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
 
 import { useLogoutMutation } from "../../store/api/auth/authApiSlice";
-import toast from "react-hot-toast";
+import { clearUser } from "../../store/slices/auth/authSlice";
 
 const SidebarLinks = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const dispath = useDispatch();
 
   const activeClass =
     "relative before:absolute before:top-0 before:left-0 before:w-[2.5px] before:h-full before:rounded-full hover:before:bg-primary hover:bg-primary/10 hover:text-primary";
@@ -24,6 +27,7 @@ const SidebarLinks = () => {
     try {
       await logout().unwrap();
       toast.success("Logged out successfully.");
+      dispath(clearUser());
       navigate("/auth/sign-in");
     } catch (error) {
       toast.error("An error occurred while logging out.");

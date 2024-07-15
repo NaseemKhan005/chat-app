@@ -7,11 +7,14 @@ import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BiLoader } from "react-icons/bi";
 import { useAuthMutation } from "../../store/api/auth/authApiSlice";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../store/slices/auth/authSlice";
 
 const AuthPage = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const path = pathname.split("/").pop();
+  const dispath = useDispatch();
 
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -41,9 +44,10 @@ const AuthPage = () => {
   useEffect(() => {
     if (isSuccess) {
       toast.success(data?.message);
+      dispath(setUser(data?.user));
       navigate("/");
     }
-  }, [data?.message, isSuccess, navigate]);
+  }, [data?.message, data?.user, dispath, isSuccess, navigate]);
 
   return (
     <div className="w-full h-screen flex-center">
