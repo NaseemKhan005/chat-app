@@ -1,16 +1,36 @@
-/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { BsChatDots } from "react-icons/bs";
 import { FiLogOut, FiMenu } from "react-icons/fi";
 import { IoCloseSharp } from "react-icons/io5";
 import { PiCirclesThree } from "react-icons/pi";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
+import { useLogoutMutation } from "../../store/api/auth/authApiSlice";
+import toast from "react-hot-toast";
 
 const SidebarLinks = () => {
   const [showSidebar, setShowSidebar] = useState(false);
+  const navigate = useNavigate();
   const { pathname } = useLocation();
+
   const activeClass =
     "relative before:absolute before:top-0 before:left-0 before:w-[2.5px] before:h-full before:rounded-full hover:before:bg-primary hover:bg-primary/10 hover:text-primary";
+
+  const [logout] = useLogoutMutation();
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    const loading = toast.loading("Logging out...");
+    try {
+      await logout().unwrap();
+      toast.success("Logged out successfully.");
+      navigate("/auth/sign-in");
+    } catch (error) {
+      toast.error("An error occurred while logging out.");
+    } finally {
+      toast.dismiss(loading);
+    }
+  };
 
   return (
     <div
@@ -51,7 +71,8 @@ const SidebarLinks = () => {
         <Link to="/status" className="!w-full block">
           <button
             className={`btn w-full ${activeClass} ${
-              pathname === "/status" && "before:bg-primary bg-primary/10 text-primary"
+              pathname === "/status" &&
+              "before:bg-primary bg-primary/10 text-primary"
             }
             ${
               showSidebar
@@ -71,7 +92,7 @@ const SidebarLinks = () => {
           showSidebar ? "items-start" : "items-center"
         }`}
       >
-        <div className="px-1 lg:px-2 w-full">
+        <div onClick={handleLogout} className="px-1 lg:px-2 w-full">
           <button
             className={`btn w-full hover:bg-primary/10 hover:text-primary ${
               showSidebar
