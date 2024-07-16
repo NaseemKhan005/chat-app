@@ -64,6 +64,12 @@ const ConversationFooter = () => {
           placeholder="Type here"
           value={inputValue}
           onChange={handleInputChange}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              handleSendMessage(e);
+            }
+          }}
           className="border p-3.5 rounded-lg w-full focus:outline-none focus-within:outline-none outline-none text-sm lg:text-base"
         />
       </div>

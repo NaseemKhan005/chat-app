@@ -1,20 +1,21 @@
+import { useEffect, useRef } from "react";
 import { BiCheckDouble } from "react-icons/bi";
 import { IoLockClosed } from "react-icons/io5";
 import { useSelector } from "react-redux";
-
 import { useGetSeletedUserMessagesQuery } from "../../store/api/chat/messageApiSlice";
 import convertDate from "../../utils/convertDate";
 import ConversationFooter from "./conversationFooter";
 import ConversationHeader from "./conversationHeader";
-import { useEffect, useRef } from "react";
+import ScrollToBottom from "./scrollToBottom";
 
 const Conversation = () => {
   const selectedUserToChat = useSelector(
     (state) => state.user.selectedUserToChat
   );
 
-  const { data } = useGetSeletedUserMessagesQuery(selectedUserToChat?._id);
-  const currentUser = selectedUserToChat?._id === data?.messages[0]?.senderId;
+  const { data, isLoading: isLoadingMessages } = useGetSeletedUserMessagesQuery(
+    selectedUserToChat?._id
+  );
 
   const endOfMessagesRef = useRef(null);
   useEffect(() => {
@@ -25,30 +26,43 @@ const Conversation = () => {
     <div className="w-full h-full flex flex-col">
       <ConversationHeader user={selectedUserToChat} />
 
-      <div className="overflow-auto py-5 px-2 lg:p-5 flex-grow">
-        {data?.messages?.map((message, i) => (
-          <div key={i} className="text-sm 2xl:text-base">
-            <div className={`chat ${currentUser ? "chat-start" : "chat-end"}`}>
+      <div className="overflow-auto py-5 px-2 lg:p-5 flex-grow relative">
+        {data?.messages?.map((message, i) => {
+          const isCurrentUser = message.senderId === selectedUserToChat?._id;
+
+          return (
+            <div key={i} className="text-sm 2xl:text-base">
               <div
-                className={`chat-bubble px-2 pt-2 rounded-xl text-black ${
-                  currentUser ? "bg-white" : "bg-secondary"
-                }`}
+                className={`chat ${isCurrentUser ? "chat-start" : "chat-end"}`}
               >
-                <div className="pr-[4.5rem]">
-                  <p>{message?.message}</p>
-                </div>
+                <div
+                  className={`chat-bubble px-2 pt-2 rounded-xl text-black ${
+                    isCurrentUser ? "bg-white" : "bg-secondary"
+                  }`}
+                >
+                  <div className="pr-[4.5rem]">
+                    <p>{message?.message}</p>
+                  </div>
 
-                <div className="flex items-center justify-end gap-1 leading-[0] -mb-5 -mt-3">
-                  <p className="text-[.6rem] 2xl:text-xs text-end leading-[0]">
-                    {convertDate(message?.createdAt)}
-                  </p>
+                  <div className="flex items-center justify-end gap-1 leading-[0] -mb-5 -mt-3">
+                    <p className="text-[.6rem] 2xl:text-xs text-end leading-[0]">
+                      {convertDate(message?.createdAt)}
+                    </p>
 
-                  <BiCheckDouble className="size-5 text-[#53BDEA] leading-[0] mb-0.5" />
+                    <BiCheckDouble className="size-5 text-[#53BDEA] leading-[0] mb-0.5" />
+                  </div>
                 </div>
               </div>
             </div>
+          );
+        })}
+
+        {isLoadingMessages && (
+          <div className="w-full h-full flex flex-col items-center justify-normal pt-5 gap-3 select-none pointer-events-none text-gray-500">
+            <span className="loading loading-spinner loading-md"></span>
+            <p>Loading Chat...</p>
           </div>
-        ))}
+        )}
 
         {data?.messages?.length === 0 && (
           <div
@@ -62,7 +76,10 @@ const Conversation = () => {
             </p>
           </div>
         )}
+
         <div ref={endOfMessagesRef} />
+
+        <ScrollToBottom />
       </div>
 
       <ConversationFooter />
@@ -91,4 +108,5 @@ const Conversation = () => {
     </div>
   );
 };
+
 export default Conversation;
