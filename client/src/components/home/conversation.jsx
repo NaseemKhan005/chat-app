@@ -1,9 +1,15 @@
 import { BiCheckDouble } from "react-icons/bi";
+import { IoLockClosed } from "react-icons/io5";
+import { useSelector } from "react-redux";
+
 import ConversationFooter from "./conversationFooter";
 import ConversationHeader from "./conversationHeader";
 
 const Conversation = () => {
-  return (
+  const selectedUserToChat = useSelector(
+    (state) => state.user.selectedUserToChat
+  );
+  return selectedUserToChat ? (
     <div className="w-full h-full flex flex-col">
       <ConversationHeader />
 
@@ -52,6 +58,28 @@ const Conversation = () => {
       </div>
 
       <ConversationFooter />
+    </div>
+  ) : (
+    <div className="flex items-center flex-col h-full w-full bg-neutral-200">
+      <div className="flex flex-col gap-5 items-center justify-center select-none flex-grow">
+        <img
+          src="/images/logo.png"
+          alt="logo"
+          className="object-contain w-20 aspect-square pointer-events-none"
+        />
+        <p className="text-2xl font-medium text-primary">
+          Select a chat to start messaging
+        </p>
+      </div>
+
+      <div className="mb-16 flex-center gap-1 select-none text-neutral-500 text-xs font-medium">
+        <IoLockClosed className="text-sm" />
+
+        <p>
+          Your personal messages are{" "}
+          <span className="text-primary">end-to-end encrypted</span>
+        </p>
+      </div>
     </div>
   );
 };
