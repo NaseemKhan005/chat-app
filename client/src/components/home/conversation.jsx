@@ -2,6 +2,8 @@ import { BiCheckDouble } from "react-icons/bi";
 import { IoLockClosed } from "react-icons/io5";
 import { useSelector } from "react-redux";
 
+import { useGetSeletedUserMessagesQuery } from "../../store/api/chat/messageApiSlice";
+import convertDate from "../../utils/convertDate";
 import ConversationFooter from "./conversationFooter";
 import ConversationHeader from "./conversationHeader";
 
@@ -10,44 +12,29 @@ const Conversation = () => {
     (state) => state.user.selectedUserToChat
   );
 
+  const { data } = useGetSeletedUserMessagesQuery(selectedUserToChat?._id);
+  const currentUser = selectedUserToChat?._id === data?.messages[0]?.senderId;
+
   return selectedUserToChat ? (
     <div className="w-full h-full flex flex-col">
       <ConversationHeader user={selectedUserToChat} />
 
       <div className="overflow-auto py-5 px-2 lg:p-5 flex-grow">
-        {[...Array(10)].map((_, i) => (
+        {data?.messages?.map((message, i) => (
           <div key={i} className="text-sm 2xl:text-base">
-            <div className="chat chat-start">
-              <div className="chat-bubble px-2 pt-2 rounded-xl bg-white text-black">
+            <div className={`chat ${currentUser ? "chat-start" : "chat-end"}`}>
+              <div
+                className={`chat-bubble px-2 pt-2 rounded-xl text-black ${
+                  currentUser ? "bg-white" : "bg-secondary"
+                }`}
+              >
                 <div className="pr-[4.5rem]">
-                  <p>
-                    It&apos;s over Anakin,
-                    <br />I have the high ground.
-                  </p>
+                  <p>{message?.message}</p>
                 </div>
 
-                <div className="flex items-center justify-end gap-1 leading-[0] -mb-2 -mt-2.5">
+                <div className="flex items-center justify-end gap-1 leading-[0] -mb-5 -mt-3">
                   <p className="text-[.6rem] 2xl:text-xs text-end leading-[0]">
-                    1:00 PM
-                  </p>
-
-                  <BiCheckDouble className="size-5 text-[#53BDEA] leading-[0] mb-0.5" />
-                </div>
-              </div>
-            </div>
-
-            <div className="chat chat-end">
-              <div className="chat-bubble px-2 pt-2 rounded-xl bg-secondary text-black">
-                <div className="pr-[4.5rem]">
-                  <p>
-                    It&apos;s over Anakin,
-                    <br />I have the high ground.
-                  </p>
-                </div>
-
-                <div className="flex items-center justify-end gap-1 leading-[0] -mb-2 -mt-2.5">
-                  <p className="text-[.6rem] 2xl:text-xs text-end leading-[0]">
-                    1:00 PM
+                    {convertDate(message?.createdAt)}
                   </p>
 
                   <BiCheckDouble className="size-5 text-[#53BDEA] leading-[0] mb-0.5" />

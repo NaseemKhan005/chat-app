@@ -18,8 +18,8 @@ export const sendMessage = async (req, res, next) => {
     }
 
     const newMessage = new Message({
-      sender: senderId,
-      receiver: receiverId,
+      senderId,
+      receiverId,
       message,
     });
 

@@ -17,7 +17,7 @@ const AuthPage = () => {
   const dispath = useDispatch();
 
   const user = useSelector((state) => state.auth.user);
-
+ 
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     name: "",

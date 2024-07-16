@@ -4,10 +4,20 @@ import { GrAttachment } from "react-icons/gr";
 import { PiPaperPlaneRightLight } from "react-icons/pi";
 import Picker from "emoji-picker-react";
 
+import { useSendMessageMutation } from "../../store/api/chat/messageApiSlice";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
+
 const ConversationFooter = () => {
   const [chosenEmoji, setChosenEmoji] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [showPicker, setShowPicker] = useState(false);
+  const selectedUserToChat = useSelector(
+    (state) => state.user.selectedUserToChat
+  );
+
+  const [sendMessage, { isLoading: isSendingMessage }] =
+    useSendMessageMutation();
 
   const onEmojiClick = (event, emojiObject) => {
     setChosenEmoji(emojiObject);
@@ -16,6 +26,22 @@ const ConversationFooter = () => {
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
+  };
+
+  const handleSendMessage = async (e) => {
+    e.preventDefault();
+    try {
+      if (inputValue.trim() || chosenEmoji) {
+        await sendMessage({
+          id: selectedUserToChat?._id,
+          message: inputValue,
+        });
+        setInputValue("");
+        setChosenEmoji(null);
+      }
+    } catch (error) {
+      toast.error("Failed to send message");
+    }
   };
 
   return (
@@ -42,8 +68,16 @@ const ConversationFooter = () => {
         />
       </div>
 
-      <button className="p-3.5 px-4 rounded-lg bg-primary text-white">
-        <PiPaperPlaneRightLight className="size-5 lg:size-6" />
+      <button
+        onClick={handleSendMessage}
+        disabled={isSendingMessage || !inputValue.trim()}
+        className="p-3.5 px-4 rounded-lg bg-primary text-white disabled:cursor-not-allowed disabled:opacity-70 h-[3.3rem]"
+      >
+        {isSendingMessage ? (
+          <span className="loading loading-spinner loading-md"></span>
+        ) : (
+          <PiPaperPlaneRightLight className="size-5 lg:size-6" />
+        )}
       </button>
     </div>
   );

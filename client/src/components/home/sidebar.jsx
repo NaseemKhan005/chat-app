@@ -1,10 +1,10 @@
-import { RiSearch2Line } from "react-icons/ri";
-import { useGetAllUsersQuery } from "../../store/api/chat/userApiSlice";
-import SidebarSkeleton from "../skeletons/sidebarSkeleton";
 import { useState } from "react";
+import { RiSearch2Line } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserToChat } from "../../store/slices/chat/userSlice";
+import { useGetAllUsersQuery } from "../../store/api/chat/userApiSlice";
 import { closeSidebar } from "../../store/slices/chat/sidebarSlice";
+import { setUserToChat } from "../../store/slices/chat/userSlice";
+import SidebarSkeleton from "../skeletons/sidebarSkeleton";
 
 const Sidebar = () => {
   const [searchValue, setSearchValue] = useState("");
