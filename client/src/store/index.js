@@ -14,6 +14,7 @@ import {
 import apiSlice from "./api/apiSlice";
 import authSlice from "./slices/auth/authSlice";
 import userSlice from "./slices/chat/userSlice";
+import sidebarSlice from "./slices/chat/sidebarSlice";
 
 const persistConfig = {
   key: "root",
@@ -25,6 +26,7 @@ const authReducer = persistReducer(persistConfig, authSlice);
 const rootReducer = combineReducers({
   auth: authReducer,
   user: userSlice,
+  sidebar: sidebarSlice,
   [apiSlice.reducerPath]: apiSlice.reducer,
 });
 

@@ -1,11 +1,11 @@
 import { IoClose } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 
+import { openSidebar } from "../../store/slices/chat/sidebarSlice";
 import { clearUser } from "../../store/slices/chat/userSlice";
 
 const ConversationHeader = ({ user }) => {
   const dispatch = useDispatch();
-  console.log(user);
 
   return (
     <div className="w-full bg-white border-b border-l select-none flex-between">
@@ -23,7 +23,7 @@ const ConversationHeader = ({ user }) => {
       </div>
 
       <IoClose
-        onClick={() => dispatch(clearUser())}
+        onClick={() => (dispatch(clearUser()), dispatch(openSidebar()))}
         className="size-6 text-zinc-500 cursor-pointer mr-5"
       />
     </div>

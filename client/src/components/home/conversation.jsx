@@ -9,7 +9,6 @@ const Conversation = () => {
   const selectedUserToChat = useSelector(
     (state) => state.user.selectedUserToChat
   );
-  console.log(selectedUserToChat);
 
   return selectedUserToChat ? (
     <div className="w-full h-full flex flex-col">
