@@ -43,6 +43,19 @@ const Conversation = () => {
             </div>
           </div>
         ))}
+
+        {data?.messages?.length === 0 && (
+          <div
+            role="alert"
+            className="alert text-xs max-w-sm rounded-lg mx-auto text-center bg-yellow-100 shadow-none border-none mt-5 select-none pointer-events-none"
+          >
+            <p className="flex items-start">
+              <IoLockClosed className="text-2xl leading-[0] -mt-1" />
+              Messages are end-to-end encrypted. No one outside of this chat,
+              not even WhatsApp, can read or listen to them.
+            </p>
+          </div>
+        )}
       </div>
 
       <ConversationFooter />
