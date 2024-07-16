@@ -9,9 +9,11 @@ const Conversation = () => {
   const selectedUserToChat = useSelector(
     (state) => state.user.selectedUserToChat
   );
+  console.log(selectedUserToChat);
+
   return selectedUserToChat ? (
     <div className="w-full h-full flex flex-col">
-      <ConversationHeader />
+      <ConversationHeader user={selectedUserToChat} />
 
       <div className="overflow-auto py-5 px-2 lg:p-5 flex-grow">
         {[...Array(10)].map((_, i) => (
@@ -67,7 +69,7 @@ const Conversation = () => {
           alt="logo"
           className="object-contain w-20 aspect-square pointer-events-none"
         />
-        <p className="text-2xl font-medium text-primary">
+        <p className="text-xl lg:text-2xl font-medium text-primary">
           Select a chat to start messaging
         </p>
       </div>
