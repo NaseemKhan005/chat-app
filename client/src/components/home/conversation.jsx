@@ -6,6 +6,7 @@ import { useGetSeletedUserMessagesQuery } from "../../store/api/chat/messageApiS
 import convertDate from "../../utils/convertDate";
 import ConversationFooter from "./conversationFooter";
 import ConversationHeader from "./conversationHeader";
+import { useEffect, useRef } from "react";
 
 const Conversation = () => {
   const selectedUserToChat = useSelector(
@@ -14,6 +15,11 @@ const Conversation = () => {
 
   const { data } = useGetSeletedUserMessagesQuery(selectedUserToChat?._id);
   const currentUser = selectedUserToChat?._id === data?.messages[0]?.senderId;
+
+  const endOfMessagesRef = useRef(null);
+  useEffect(() => {
+    endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [data?.messages]);
 
   return selectedUserToChat ? (
     <div className="w-full h-full flex flex-col">
@@ -56,6 +62,7 @@ const Conversation = () => {
             </p>
           </div>
         )}
+        <div ref={endOfMessagesRef} />
       </div>
 
       <ConversationFooter />
