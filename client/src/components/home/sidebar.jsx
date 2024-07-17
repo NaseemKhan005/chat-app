@@ -62,18 +62,9 @@ const Sidebar = () => {
 
           {usersLoading && (
             <div className="flex flex-col gap-4 mt-2">
-              <SidebarSkeleton />
-              <SidebarSkeleton />
-              <SidebarSkeleton />
-              <SidebarSkeleton />
-              <SidebarSkeleton />
-              <SidebarSkeleton />
-              <SidebarSkeleton />
-              <SidebarSkeleton />
-              <SidebarSkeleton />
-              <SidebarSkeleton />
-              <SidebarSkeleton />
-              <SidebarSkeleton />
+              {[...Array(12)].map((_, i) => (
+                <SidebarSkeleton key={i} />
+              ))}
             </div>
           )}
 

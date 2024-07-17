@@ -12,6 +12,7 @@ const Conversation = () => {
   const selectedUserToChat = useSelector(
     (state) => state.user.selectedUserToChat
   );
+  const authUser = useSelector((state) => state.auth.user);
 
   const { data, isLoading: isLoadingMessages } = useGetSeletedUserMessagesQuery(
     selectedUserToChat?._id
@@ -28,28 +29,36 @@ const Conversation = () => {
 
       <div className="overflow-auto py-5 px-2 lg:p-5 flex-grow relative">
         {data?.messages?.map((message, i) => {
-          const isCurrentUser = message.senderId === selectedUserToChat?._id;
+          const currenAuthUser = message?.senderId === authUser?._id;
 
           return (
             <div key={i} className="text-sm 2xl:text-base">
               <div
-                className={`chat ${isCurrentUser ? "chat-start" : "chat-end"}`}
+                className={`chat ${
+                  !currenAuthUser ? "chat-start" : "chat-end"
+                }`}
               >
                 <div
-                  className={`chat-bubble px-2 pt-2 rounded-xl text-black ${
-                    isCurrentUser ? "bg-white" : "bg-secondary"
+                  className={`chat-bubble px-2 pt-2 pb-0 rounded-xl text-black ${
+                    !currenAuthUser ? "bg-white" : "bg-secondary"
                   }`}
                 >
-                  <div className="pr-[4.5rem]">
-                    <p>{message?.message}</p>
+                  <div className={`max-w-sm lg:max-w-lg -mb-2 ${
+                    currenAuthUser ? "pr-[4.6rem]": "pr-[3.4rem]"
+                  }`}>
+                    <p className="text-clip overflow-hidden text-xs md:text-sm">
+                      {message?.message}
+                    </p>
                   </div>
 
-                  <div className="flex items-center justify-end gap-1 leading-[0] -mb-5 -mt-3">
-                    <p className="text-[.6rem] 2xl:text-xs text-end leading-[0]">
+                  <div className="flex items-center justify-end gap-1 w-fit ml-auto -mb-2 mt-auto">
+                    <p className="text-[.6rem] 2xl:text-xs text-end">
                       {convertDate(message?.createdAt)}
                     </p>
 
-                    <BiCheckDouble className="size-5 text-[#53BDEA] leading-[0] mb-0.5" />
+                    {currenAuthUser && (
+                      <BiCheckDouble className="size-5 text-[#53BDEA] mb-0.5" />
+                    )}
                   </div>
                 </div>
               </div>
