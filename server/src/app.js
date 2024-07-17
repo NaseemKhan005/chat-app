@@ -7,8 +7,9 @@ import errorHandler from "./middlewares/errorHandler.js";
 import authRoutes from "./routes/authRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import { app, server } from "./socket/socket.js";
+import connectToDB from "./config/db.js";
 
-const app = express();
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -34,4 +35,7 @@ app.use("/api/v1/users", userRoutes);
 // Error Handler
 app.use(errorHandler);
 
-export default app;
+server.listen(config.port, () => {
+  connectToDB();
+  console.log(`Server is running on port ${config.port}`);
+});

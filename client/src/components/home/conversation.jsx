@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { BiCheckDouble } from "react-icons/bi";
 import { IoLockClosed } from "react-icons/io5";
 import { useSelector } from "react-redux";
+
 import { useGetSeletedUserMessagesQuery } from "../../store/api/chat/messageApiSlice";
 import convertDate from "../../utils/convertDate";
 import ConversationFooter from "./conversationFooter";
@@ -43,9 +44,11 @@ const Conversation = () => {
                     !currenAuthUser ? "bg-white" : "bg-secondary"
                   }`}
                 >
-                  <div className={`max-w-sm lg:max-w-lg -mb-2 ${
-                    currenAuthUser ? "pr-[4.6rem]": "pr-[3.4rem]"
-                  }`}>
+                  <div
+                    className={`max-w-sm lg:max-w-lg -mb-2 ${
+                      currenAuthUser ? "pr-[4.6rem]" : "pr-[3.4rem]"
+                    }`}
+                  >
                     <p className="text-clip overflow-hidden text-xs md:text-sm">
                       {message?.message}
                     </p>

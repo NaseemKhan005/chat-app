@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { RiSearch2Line } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
+
+import { useSocketContext } from "../../context/socketContext";
 import { useGetAllUsersQuery } from "../../store/api/chat/userApiSlice";
 import { closeSidebar } from "../../store/slices/chat/sidebarSlice";
 import { setUserToChat } from "../../store/slices/chat/userSlice";
@@ -14,6 +16,7 @@ const Sidebar = () => {
   const selectedUserToChat = useSelector(
     (state) => state.user.selectedUserToChat
   );
+  const authUser = useSelector((state) => state.auth.user);
 
   const { data, isLoading: usersLoading } = useGetAllUsersQuery();
 
@@ -21,6 +24,10 @@ const Sidebar = () => {
     user.name.toLowerCase().includes(searchValue.toLowerCase())
   );
 
+  const { onlineUsers } = useSocketContext();
+  const isOnline = onlineUsers?.includes(authUser?._id);
+
+  console.log(onlineUsers, isOnline, authUser._id);
   return (
     <div
       className={`bg-white flex h-full min-w-[calc(100vw-4rem)] md:min-w-80 lg:min-w-96 shadow-md shadow-black/5 md:relative fixed top-0 left-16 md:left-0 z-10 transition-all duration-500 ${
@@ -86,7 +93,7 @@ const Sidebar = () => {
                   user?._id === selectedUserToChat?._id && "bg-neutral-100"
                 }`}
               >
-                <div className="avatar online">
+                <div className={`avatar ${isOnline && "online"}`}>
                   <div className="w-12 rounded-full">
                     <img src={user?.profilePic || "/images/no-avatar.jpg"} />
                   </div>
